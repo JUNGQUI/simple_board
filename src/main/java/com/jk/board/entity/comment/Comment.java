@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jk.board.entity.board.Board;
 import com.jk.board.entity.common.Common;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
 @EqualsAndHashCode
 @Entity
 public class Comment {
@@ -21,8 +21,8 @@ public class Comment {
     @Embedded
     private Common commonContent;
 
-    @JsonManagedReference
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
 
@@ -30,6 +30,15 @@ public class Comment {
     @OneToMany(mappedBy = "parentComment", fetch = FetchType.LAZY)
     private List<Comment> childrenComment;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Board commentedBoard;
+
+    public Comment() {}
+
+    public Comment(Common common, Comment parentComment, List<Comment> childrenComment, Board commentedBoard) {
+        this.commonContent = common;
+        this.parentComment = parentComment;
+        this.childrenComment = childrenComment;
+        this.commentedBoard = commentedBoard;
+    }
 }
