@@ -14,7 +14,4 @@ public class TestService {
         this.userService = userService;
     }
 
-    public void test() {
-        userService.getByLoginId("jklee");
-    }
 }
