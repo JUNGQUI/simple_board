@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @EqualsAndHashCode
-@Entity(name = "board")
+@Entity
 public class Board {
 
     @Id
